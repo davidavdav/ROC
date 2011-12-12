@@ -1,0 +1,25 @@
+Package: sretools
+Type: Package
+Title: Compute error metrics and make DET plots for NIST-like Speaker Recognition Evaluations
+Version: 0.5
+Date: 2011-10-31
+Author: David A. van Leeuwen
+Maintainer: <david.vanleeuwen@gmail.com>
+Description: This package contains a set of routines that can compute various
+ performance measures for NIST style speaker recognition evaluation
+ system output.  The routines in this package allow
+ - trial key info sore SRE 2006, 2008 and EVALITA 2009
+ - flexible plotting of DET curves
+ - calculation of EER, minCdet, Cdet, minCllr and Cllr
+ - adding legends to the plot in the order of the EER
+ - plotting Applied Probability of Error (APE)-plots, with proper legend
+ - plotting of Normalized Bayes Error rate (NBE) plots
+ - merging of meta-information to the scores, and manipulation of
+   these tables
+ - conditioning trials on meta-information 
+ - weighting trials based on a chosen conditioning, before calculation
+   of DET parameters and performance metrics.  This is pretty new,
+   although George Doddington's DET_tools.pm has similar capability.
+License: GPL-2
+Depends: fdrtool (>= 1.2.4)
+LazyLoad: yes
