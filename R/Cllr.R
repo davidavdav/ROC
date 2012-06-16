@@ -5,10 +5,8 @@ function(x, opt=F) {
     x$score <- x$opt.llr
   }
   if (is.null(x$weight)) x <- transform(x, weight=1) # did we have weights?
-  attach(x)
-  c.miss <- 1/log(2) * mean(log(1+exp(-score[target]))*weight[target])
-  c.fa <- 1/log(2) * mean(log(1+exp(score[!target]))*weight[!target])
-  detach(x)
+  c.miss <- 1/log(2) * mean(log(1+exp(-x$score[x$target]))*x$weight[x$target])
+  c.fa <- 1/log(2) * mean(log(1+exp(x$score[!x$target]))*x$weight[!x$target])
   (c.miss+c.fa)/2
 }
 

@@ -1,7 +1,12 @@
 `ape.plot` <-
-function(data, legend="Ape plot", bar=T, bw=F) {
+function(data, legend="APE plot", bar=T, bw=F) {
+  if ("list" %in% class(data)) stopifnot(all(sapply(data, class)=="det"))
+  else {
+    if ("sre" %in% class(data)) data <- det(data) # "sre" is OK
+    stopifnot("det" %in% class(data))       # otherwise must be class "det"
+    data <- list(data)
+  }
   def.par <- par(no.readonly=T)          # save parameters...
-  if (class(data)=="det") data <- list(data)
   nr <- 1+as.numeric(bar)
   nsys <- length(data)
   layout(matrix(c(1,1:nsys,rep(nsys+1,nsys+1)),nr,nsys+1, byrow=T),
@@ -36,7 +41,7 @@ function(data, legend="Ape plot", bar=T, bw=F) {
       par(mar=c(5,2,2,1))
     plot(lpo, pe[,i], col=col[1], type="l", lwd=2, main=legend[[i]],
          ylim=c(0,max.e), panel.first=grid(2, NULL, lty=lty[1]),
-         xlab="log prior odds", ylab="probability of error")
+         xlab="prior log odds", ylab="probability of error")
     lines(lpo, pe.min[,i], col=col[2], lty=lty[2], lwd=2)
     lines(lpo, pe.ref[,i], col=col[3], lty=lty[3], lwd=2)
     abline(v=log(1/9.9), col=col[4], lty=lty[4])

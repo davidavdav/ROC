@@ -1,5 +1,10 @@
 `DCF` <-
-function (fa, miss) {
+function (pfa, pmiss) {
   DCF.p <- get("DCF.p", envir=.sretoolsEnv)
-  DCF.p$cmiss*miss*DCF.p$prior + DCF.p$cfa*fa*(1-DCF.p$prior)
+  if (missing(pfa) && missing(pmiss))
+    DCF.p
+  else {
+    stopifnot(!missing(pfa) & !missing(pmiss))
+    DCF.p$cmiss*pmiss*DCF.p$prior + DCF.p$cfa*pfa*(1-DCF.p$prior)
+  }
 }

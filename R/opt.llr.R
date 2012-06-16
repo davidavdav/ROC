@@ -14,8 +14,8 @@ function(x, laplace=T) {
   if (laplace) 
     p.opt <- p.opt[3:(length(p.opt)-2)]
   post.log.odds <- log(p.opt)-log(1-p.opt)
-  log.prior.odds <- log(nt/nn)
-  llrs <- post.log.odds - log.prior.odds
+  prior.log.odds <- log(nt/nn)
+  llrs <- post.log.odds - prior.log.odds
   llrs[o] <- llrs
   transform(x, opt.llr=llrs)
 }

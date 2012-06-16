@@ -40,6 +40,7 @@ det.sre <- function(x, cond, ct=NULL) {
   nn <- sum((1-t)*w)                    # number of non-target trials
   miss <- c(0,rangecheck(cumsum(t*w)/nt)) # the cummlative (weighted) probs
   fa <- c(1,rangecheck(1 - cumsum((1-t)*w)/nn))
+  thres <- x$score
   nmiss <- sum((x$target & !x$dec)*w) # weighted counts...
   nfa <- sum((!x$target & x$dec)*w)
   ## adcf confidence interval
@@ -67,6 +68,8 @@ det.sre <- function(x, cond, ct=NULL) {
   dcf <- DCF(fa, miss)
   mi <- which.min(dcf)
   min.score <- x$score[mi]
+  mfa <- fa[mi]
+  mmiss <- miss[mi]
   ## Cllr
   cllr <- Cllr(x)
   x <- opt.llr(x, laplace=F)
@@ -84,8 +87,8 @@ det.sre <- function(x, cond, ct=NULL) {
               nt=nt, nn=nn, n=nt+nn,
               afa=afa, amiss=amiss, afa.lci=afa.lci, afa.uci=afa.uci,
               amiss.lci=amiss.lci, amiss.uci=amiss.uci,
-              mfa=fa[mi], mmiss=miss[mi], atscore=min.score,
-              fa=fa, miss=miss, data=x, cond.table=ct, ch=ch)
+              mfa=mfa, mmiss=mmiss, atscore=min.score, dcf.p=DCF(), 
+              fa=fa, miss=miss, thres=thres, data=x, cond.table=ct, ch=ch)
   class(res) <- "det"
   invisible(res)
 }

@@ -1,12 +1,17 @@
 export(det, det.sre, det.matrix,        # create DET statistics
-       read.sre, read.tnt,              # read SRE structure
-       eer,                             # ROC convex hull implementation
+       read.sre, read.tnt, sre.tnt,     # read SRE structure
+       sre,                             # bless structure to be class "sre"
+       logit, sigmoid,                  # helper functions for probabilities
+       eer, Cllr.tnt,                   # ROC convex hull implementation
        plot.det, summary.det,
        plot.cond,
        legend.det,                      # make a legend for a DET plot
-       ape.plot,                        # APE plot
+       ape.plot,                         # APE plot
+       ece.tnt, ece.plot,
        nbe.plot,                        # Normalized Bayes Error rate plot
        cond.table,                      # comput condition contingency table
-       setDCF                           # set DCF parameters
+       setDCF, prior.log.odds, DCF,      # set DCF parameters
+       tippet.plot, roc.plot,
+       ddensity, plot.ddensity
        )
 

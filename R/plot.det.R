@@ -5,40 +5,44 @@ function(x, nr=1, lty=1, col=nr, optimize=T,
          ylab="miss probability (%)",
          rocch=F, Ninterp=10,
          ...) {
+  if (!is.null(x)) {
+    if ("sre" %in% class(x)) x <- det(x) # "sre" is OK
+    stopifnot("det" %in% class(x))       # otherwise must be class "det"
+  }
   xlim <- c(nd(xmin), nd(xmax))         # 0.5 % seems accurately enough
   ylim <- c(nd(ymin), nd(ymax))
   par(pty="s", cex.axis=1)
   if (is.null(x))                      # only produce frame...
     xdata <- ydata <- numeric(0)        # empty data set
   else {
-    attach(x)
-    size <- length(fa)
+    size <- length(x$fa)
     if (optimize) {
-      changes <- diff(diff(fa)!=0)<0 | diff(diff(miss)!=0)<0
+      changes <- diff(diff(x$fa)!=0)<0 | diff(diff(x$miss)!=0)<0
       sample <- c(T, changes, T)
     } else sample <- 1:size
     if (rocch) {
       ## keep it simple draw straight lines
-      nseg <- length(ch)-1
+      nseg <- length(x$ch)-1
       ninter <- nseg*Ninterp+1
       xdata <- ydata <- numeric(ninter)
-      fa <- fa[ch]
-      miss <- miss[ch]
+      x$fa <- x$fa[x$ch]
+      x$miss <- x$miss[x$ch]
       for (i in 1:nseg) {
         ## interpolate
-        xx <- fa[i]+(0:9)*(fa[i+1]-fa[i])/Ninterp
-        yy <- miss[i]+(0:9)*(miss[i+1]-miss[i])/Ninterp
-        xdata[i*Ninterp+1:Ninterp] <- qnorm(xx)
-        ydata[i*Ninterp+1:Ninterp] <- qnorm(yy)
+        xx <- x$fa[i]+(0:(Ninterp-1))*(x$fa[i+1]-x$fa[i])/Ninterp
+        yy <- x$miss[i]+(0:(Ninterp-1))*(x$miss[i+1]-x$miss[i])/Ninterp
+        xdata[(i-1)*Ninterp+(1:Ninterp)] <- qnorm(xx)
+        ydata[(i-1)*Ninterp+(1:Ninterp)] <- qnorm(yy)
       }
-      xdata[ninter] <- qnorm(fa[nseg+1])
-      ydata[ninter] <- qnorm(miss[nseg+1])
+      xdata[ninter] <- qnorm(x$fa[nseg+1])
+      ydata[ninter] <- qnorm(x$miss[nseg+1])
     } else {
-      xdata <- qnorm(fa[sample])
-      ydata <- qnorm(miss[sample])
+      xdata <- qnorm(x$fa[sample])
+      ydata <- qnorm(x$miss[sample])
     }
-    detach(x)
   }
+  xdata <- limit.quantile(xdata, xlim)
+  ydata <- limit.quantile(ydata, ylim)
   if (nr==1 && lty==1) {                # first time, plot everything..
     plot(xdata, ydata, type="l", xaxt='n',yaxt='n', xlab=xlab, ylab=ylab,
          xlim=xlim, ylim=ylim, lwd=2, col=col, lty=lty, ...)

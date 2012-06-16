@@ -1,5 +1,7 @@
+## bless object with class "sre"
 sre <- function(x) {
-  if ("data.frame" %in% class(x))
-    class(x) <- c("sre", class(x))
+  stopifnot("data.frame" %in% class(x), c("score", "target") %in% names(x))
+  if (! "dec" %in% names(x)) x$dec <- x$score>0
+  class(x) <- c("sre", class(x))
   x
 }
