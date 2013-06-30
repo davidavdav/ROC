@@ -15,6 +15,7 @@
 det.sre <- function(x, cond, ct=NULL) {
   if (! "sre" %in% class(x) && sum(names(x) %in% c("score", "dec", "target")) != 3)
       stop("`x' must be of class `sre' or contain `score', `dec' and `target'")
+  decision <- "dec" %in% names(x)
   ## the very first we must do is eval(substitute(cond))...
   if (!missing(cond)) 
     ct <- eval(substitute(cond.table(x, cond, target=TRUE)), x, parent.frame())
@@ -41,40 +42,44 @@ det.sre <- function(x, cond, ct=NULL) {
   miss <- c(0,rangecheck(cumsum(t*w)/nt)) # the cummlative (weighted) probs
   fa <- c(1,rangecheck(1 - cumsum((1-t)*w)/nn))
   thres <- x$score
-  nmiss <- sum((x$target & !x$dec)*w) # weighted counts...
-  nfa <- sum((!x$target & x$dec)*w)
-  ## adcf confidence interval
-  if (!is.null(ct)) {                   # estimated through normal
-    afa <- nfa/nn                       # approximation and weighted counts
-    ci <- qnorm(0.975)*sqrt(afa*(1-afa)/nn)
-    afa.lci <- afa-ci
-    afa.uci <- afa+ci
-    amiss <- nmiss/nt
-    ci <- qnorm(0.975)*sqrt(amiss*(1-amiss)/nt)
-    amiss.lci <- amiss-ci
-    amiss.uci <- amiss+ci
-  } else {                              # "true" binomial confidence intervals
-    fa.ci <- data.frame(ci.binomial(nfa, nn))
-    afa <- fa.ci$p.x.n                  # actual false alarms
-    afa.lci <- fa.ci$p.lci
-    afa.uci <- fa.ci$p.uci
-    miss.ci <- data.frame(ci.binomial(nmiss, nt))
-    amiss <- miss.ci$p.x.n              # actual misses
-    amiss.lci <- miss.ci$p.lci
-    amiss.uci <- miss.ci$p.uci
+  plo <- prior.log.odds()
+  ## a whole lot of code for computing actual DCF if decisions are made
+  if (decision && length(plo)==1) {    # a single operating point
+    nmiss <- sum((x$target & !x$dec)*w) # weighted counts...
+    nfa <- sum((!x$target & x$dec)*w)
+    ## adcf confidence interval
+    if (!is.null(ct)) {                   # estimated through normal
+      afa <- nfa/nn                       # approximation and weighted counts
+      ci <- qnorm(0.975)*sqrt(afa*(1-afa)/nn)
+      afa.lci <- afa-ci
+      afa.uci <- afa+ci
+      amiss <- nmiss/nt
+      ci <- qnorm(0.975)*sqrt(amiss*(1-amiss)/nt)
+      amiss.lci <- amiss-ci
+      amiss.uci <- amiss+ci
+    } else {                              # "true" binomial confidence intervals
+      fa.ci <- data.frame(ci.binomial(nfa, nn))
+      afa <- fa.ci$p.x.n                  # actual false alarms
+      afa.lci <- fa.ci$p.lci
+      afa.uci <- fa.ci$p.uci
+      miss.ci <- data.frame(ci.binomial(nmiss, nt))
+      amiss <- miss.ci$p.x.n              # actual misses
+      amiss.lci <- miss.ci$p.lci
+      amiss.uci <- miss.ci$p.uci
+    }
+    ## actual, minimum DCF, normalized
+    adcf <- DCF(afa, amiss) / pmin(sigmoid(-plo), sigmoid(plo))
+  } else if (length(plo)>=1) {           # decisions based on llr
+    adcf <- actDCF(x, plo)
+  } else {
+    adcf <- NA
   }
-  ## actual, minimum DCF
-  adcf <- DCF(afa, amiss)
-  dcf <- DCF(fa, miss)
-  mi <- which.min(dcf)
-  min.score <- x$score[mi]
-  mfa <- fa[mi]
-  mmiss <- miss[mi]
   ## Cllr
   cllr <- Cllr(x)
   x <- opt.llr(x, laplace=F)
   cllr.min <- Cllr(x, opt=T)
-  ## EER, though convex hull optimization
+  mdcf <- minDCF(x, plo)
+  ## EER, though convex hull optimization---this is the same as PAV!
   ch <- chull(c(fa,1.1), c(miss,1.1))
   ch <- sort(ch[ch<=length(fa)])                 # remove outer hull point
   EER=eer(fa, miss, ch)
@@ -82,12 +87,13 @@ det.sre <- function(x, cond, ct=NULL) {
   mt <- mean(x$score[x$target])
   mn <- mean(x$score[!x$target])
   res <- list(Cllr=cllr, Cllr.min=cllr.min, eer=100*EER,
-              Cdet=adcf, Cdet.min=dcf[mi],
+              Cdet=mean(adcf), Cdet.min=mean(mdcf),
               mt=mt, mn=mn, 
               nt=nt, nn=nn, n=nt+nn,
-              afa=afa, amiss=amiss, afa.lci=afa.lci, afa.uci=afa.uci,
-              amiss.lci=amiss.lci, amiss.uci=amiss.uci,
-              mfa=mfa, mmiss=mmiss, atscore=min.score, dcf.p=DCF(), 
+##              afa=afa, amiss=amiss, afa.lci=afa.lci, afa.uci=afa.uci,
+##              amiss.lci=amiss.lci, amiss.uci=amiss.uci,
+##              mfa=mfa, mmiss=mmiss, atscore=min.score,
+              plo=plo, 
               fa=fa, miss=miss, thres=thres, data=x, cond.table=ct, ch=ch)
   class(res) <- "det"
   invisible(res)

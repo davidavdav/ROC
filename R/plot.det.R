@@ -59,9 +59,11 @@ function(x, nr=1, lty=1, col=nr, optimize=T,
     lines(xdata, ydata, type="l", lty=lty, lwd=2, col=col)
   ## actual DCF
   if (is.null(x)) return(NULL)
-  rect(qnorm(x$afa.lci), qnorm(x$amiss.lci),
-       qnorm(x$afa.uci), qnorm(x$amiss.uci), border=col, lwd=2)
-  points(qnorm(x$mfa), qnorm(x$mmiss), pch=1, cex=2, col=col, lwd=2)
+  if (!is.null(x$afa.lci)) {
+    rect(qnorm(x$afa.lci), qnorm(x$amiss.lci),
+         qnorm(x$afa.uci), qnorm(x$amiss.uci), border=col, lwd=2)
+    points(qnorm(x$mfa), qnorm(x$mmiss), pch=1, cex=2, col=col, lwd=2)
+  }
   summary(x)
 }
 

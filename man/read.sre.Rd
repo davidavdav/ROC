@@ -39,7 +39,7 @@ read.sre(file)
   \code{target}.  Common fields include \code{model}, \code{test},
   \code{gender}, \code{mcond}, \code{tcond}, \code{adapt}.  NIST SRE
   2008 fields are \code{chan}, \code{mlang}, \code{tlang},
-  \code{\mtype}, \code{ttype}, \code{mmic} and \code{tmic}.  An EVALITA SRE
+  \code{mtype}, \code{ttype}, \code{mmic} and \code{tmic}.  An EVALITA SRE
   2009 additional field is \code{channel}.
   
   \item{score}{The score of the detection trial}

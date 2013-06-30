@@ -9,7 +9,7 @@ eer <- function(pfa, pmiss, index=NULL) {
     index <- chull(pfa, pmiss)               # find convex hull data points
     index <- sort(index[index<=n])          # remove corner
   }
-  i <- which(diff(sign(pfa[index]-pmiss[index]))!=0)
+  i <- which(diff(sign(pfa[index]-pmiss[index]))!=0)[1] # in case there are multiple cases...
   if (i==length(index))                   # this should not happen
     return ((pfa[i]+pmiss[i])/2)
   ## intersect convex hull segment with y=x

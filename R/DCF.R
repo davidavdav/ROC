@@ -5,6 +5,6 @@ function (pfa, pmiss) {
     DCF.p
   else {
     stopifnot(!missing(pfa) & !missing(pmiss))
-    DCF.p$cmiss*pmiss*DCF.p$prior + DCF.p$cfa*pfa*(1-DCF.p$prior)
+    pmiss %o% (DCF.p$cmiss*DCF.p$prior) + pfa %o% (DCF.p$cfa*(1-DCF.p$prior))
   }
 }
