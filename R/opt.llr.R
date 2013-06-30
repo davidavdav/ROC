@@ -2,7 +2,7 @@
 function(x, laplace=T) {
   o <- order(x$score, !x$target)        # break ties in pessimistic order
   p.ideal <- as.numeric(x$target[o])    # ideal posterior
-  if (is.null(x$weight)) x <- transform(x, weight=1) # did we have weights?  
+  if (is.null(x$weight)) x$weight=1 # did we have weights?  
   w.ideal <- x$weight[o]
   nt <- sum(p.ideal)
   nn <- sum(1-p.ideal)
@@ -15,7 +15,8 @@ function(x, laplace=T) {
     p.opt <- p.opt[3:(length(p.opt)-2)]
   post.log.odds <- log(p.opt)-log(1-p.opt)
   prior.log.odds <- log(nt/nn)
-  llrs[o] <- post.log.odds - prior.log.odds
+  llrs <- post.log.odds - prior.log.odds
+  llrs[o] <- llrs
   transform(x, opt.llr=llrs)
 }
 

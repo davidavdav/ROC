@@ -1,4 +1,6 @@
-`plot.det` <-
+`plot.det` <- function(x, ...) UseMethod("plot.det")
+
+plot.det.det <- 
 function(x, nr=1, lty=1, col=nr, optimize=T,
          xmin=0.1, xmax=50, ymin=0.1, ymax=50,
          xlab="false alarm probability (%)",

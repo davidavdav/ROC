@@ -29,7 +29,7 @@ det.sre <- function(x, cond, ct=NULL) {
     w <- as.vector(mf[ct$target]/ct$Freq)
     ct <- transform(ct, weight=w)
     x <- merge(x, ct, by=names(ct)[1:nvar]) # add weight = 1/Freq
-    x <- x[order(x$score),]             #sort by score
+    x <- x[order(x$score, !x$target),]             #sort by score
   } else {
     x <- transform(x, weight=1)
     x <- x[order(x$score),]             #sort by score
