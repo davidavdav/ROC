@@ -1,26 +1,32 @@
 Package: sretools
 Type: Package
 Title: Compute error metrics and make DET plots for NIST-like Speaker Recognition Evaluations
-Version: 0.9
-Date: 2012-09-18
+Version: 0.10
+Date: 2013-07-01
 Author: David A. van Leeuwen
 Maintainer: <david.vanleeuwen@gmail.com>
 Description: This package contains a set of routines that can compute various
- performance measures for NIST style speaker recognition evaluation
+ performance measures related to Receiver Operating Characteristic curves, 
+ including NIST style speaker recognition evaluation
  system output.  The routines in this package allow
- - trial key info sore SRE 2006, 2008 and EVALITA 2009
- - flexible plotting of DET curves
- - calculation of EER, minCdet, Cdet, minCllr and Cllr
- - adding legends to the plot in the order of the EER
- - plotting Applied Probability of Error (APE)-plots, with proper legend
- - plotting of Normalized Bayes Error rate (NBE) plots
- - merging of meta-information to the scores, and manipulation of
-   these tables
- - conditioning trials on meta-information 
- - weighting trials based on a chosen conditioning, before calculation
-   of DET parameters and performance metrics.  
- - tippet plot
- - normalized Bayes error rate plot
+ - General ROC related:
+ -- computing essential ROC statistics
+ -- calculation of EER, minCllr and Cllr
+ -- plotting of ROC curves
+ -- computing the optimal score-to-log-lihelihood-ratie mapping
+ - NIST SRE related:
+ -- trial key info for SRE 2006, 2008 and EVALITA 2009
+ -- flexible plotting of DET curves
+ -- adding legends to the plot in the order of the EER
+ -- plotting Applied Probability of Error (APE)-plots, with proper legend
+ -- plotting of Normalized Bayes Error rate (NBE) plots
+ -- merging of meta-information to the scores, and manipulation of
+    these tables
+ -- conditioning trials on meta-information 
+ -- weighting trials based on a chosen conditioning, before calculation
+    of DET parameters and performance metrics.  
+ -- tippet plot
+ -- normalized Bayes error rate plot
 License: GPL-2
 Depends: fdrtool (>= 1.2.4)
 LazyLoad: yes
