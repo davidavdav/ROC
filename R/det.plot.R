@@ -9,6 +9,7 @@ det.plot <- function(x, nr=1, lty=1, col=nr, optimize=T,
          ...) {
   if (is.null(x)) {
     xdata <- ydata <- numeric(0)
+    ptype <- "b"
   }
   else {
     if ("cst" %in% class(x)) {
@@ -22,12 +23,12 @@ det.plot <- function(x, nr=1, lty=1, col=nr, optimize=T,
     ## x should be of class "roc" now
     xdata <- qnorm(x$pfa)
     ydata <- qnorm(x$pmiss)
+    ptype <- ifelse(nrow(x) > 15, "l", "b")
   }
   xlim <- c(nd(xmin), nd(xmax))         # 0.5 % seems accurately enough
   ylim <- c(nd(ymin), nd(ymax))
   xdata <- limit.quantile(xdata, xlim)
   ydata <- limit.quantile(ydata, ylim)
-  ptype <- ifelse(nrow(x) > 15, "l", "b")
   if (nr==1 && lty==1) {                # first time, plot everything..
     par(pty="s")
     plot(xdata, ydata, type=ptype, xaxt='n',yaxt='n', xlab=xlab, ylab=ylab,

@@ -1,13 +1,14 @@
-export(det, det.sre, det.matrix,        # create DET statistics
-       read.sre, read.tnt, # read SRE, collection of supervised trials structure
+export(roc,            # create a ROC structure from supervised trials
        as.cst, cst.tnt,    # bless structure to be class "cst"
-       roc, roc.cst, roc.default,      # create a ROC structure from supervised trials
        plot.roc, print.roc, summary.roc,       # standard ROC plot
        det.plot,                  # DET plot for a ROC or cst data.
        llr.plot,                  # optimal score->LLR mapping
+       det, det.sre, det.matrix,  # create DET statistics
+       read.sre, read.tnt, # read SRE, collection of supervised trials structure
        logit, sigmoid,                  # helper functions for probabilities
        eer, Cllr.tnt,                   # ROC convex hull implementation
-       summary.det, plot.det,           # default summary and plot routines for "det"
+       summary.det, plot.det, plot.det.det,          # default summary and plot routines for "det"
+       calibrate,                       # calibration function
        plot.cond,
        legend.det,                      # make a legend for a DET plot
        ape.plot,                         # APE plot

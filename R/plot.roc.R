@@ -8,7 +8,7 @@ plot.roc <- function(r, n=1, chull=T, type=ifelse(nrow(r) > 15, "l", "b"),
     par(pty="s")
     plot(r$pfa, r$pmiss, xlim=xlim, ylim=ylim, type=type, xlab=xlab, ylab=ylab, ...)
   } else {
-    lines(r$pfa, r$pmiss, type=type, col=n)
+    lines(r$pfa, r$pmiss, type=type, col=n, ...)
   }
   summary(r)
 }

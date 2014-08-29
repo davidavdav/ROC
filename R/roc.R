@@ -1,23 +1,33 @@
-roc <- function(x) {
-  UseMethod("roc")
-}
-
-roc.cst <- function(x) {
-  stopifnot(is(x, "cst"))
+## this should cover most cases of input data now
+roc <- function(x, laplace=T) {
+  x <- as.cst(x)
   call <- match.call()
-  o <- order(x$score, !x$target)
+  o <- order(x$score, !x$target)        # order targets before nontargets
   xo <- x[o,]
+  ordered <- is.ordered(x$score)        #ordered factor
+  score <- xo$score
+  discrete <- length(unique(score)) < 0.5 * length(score)
   w <- 1                                # weight, for future change
   t <- as.numeric(xo$target)             # targets, delta pmiss
+  if (laplace) {
+    t <- c(1, 0, t, 1, 0)
+    score <- c(-Inf, -Inf, score, Inf, Inf)
+#    w <- c(1, 1, w, 1, 1)
+  }
   n <- 1-t                              # nontargtes, delta pfa
   nt <- sum(t*w)                        # number of target trials
   nn <- sum((1-t)*w)                    # number of non-target trials
   ## in the following, we group targets and non-targets with identical score
   ## we need to step carfully through them, as their cumulative counts need
   ## to be used to comput delta PFA and delta pmiss. 
-  dt <- c(1,diff(xo$score)!=0,1)         # points where threshold changes
+  dt <- c(1,diff(as.numeric(score))!=0,1)         # points where threshold changes
   changes <- which(dt!=0)
-  thres <- c(xo$score,NA)
+  if (ordered) {                        # can't append to a factor
+    thres <- score[c(1:length(score),1)]
+    thres[length(score)+1] <- NA
+  } 
+  else 
+    thres <- c(score,NA)
   remove <- numeric(0)
   for (i in 1:(length(changes)-1)) {
     start <- changes[i]
@@ -28,7 +38,7 @@ roc.cst <- function(x) {
       remove <- c(remove, (start+1):end)           # mark range for removal
     }
   }
-  if (length(remove)>1) {
+  if (length(remove)>1) {               # why 1 and not 0?
     t <- t[-remove]
     n <- n[-remove]
     thres <- thres[-remove]
@@ -58,11 +68,16 @@ roc.cst <- function(x) {
   roc$chull[index] <- T
   ## mind the abs( ) in the following expression, just to take care of 1/0=Inf (not -Inf)
   roc$opt.llr <- with(subset(roc, chull), log(abs(diff(pmiss) / diff(pfa))))[cumsum(roc$chull)]
-  ## then, through isotonic regression
-  x.opt <- attr(roc, "data") <- opt.llr(x, FALSE)
+  ## then, through isotonic regression---this should give identical answers
+  x.opt <- attr(roc, "data") <- opt.llr(x, laplace)
   ##eer
-  stats <- list(Cllr=Cllr(x), Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index),
-                mt=mean(x$score[x$target]), mn=mean(x$score[!x$target]), nt=nt, nn=nn, n=nt+nn)
+  if (ordered)
+    stats <- list(Cllr=NA, Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index),
+                  mt=NA, mn=NA, nt=nt, nn=nn, n=nt+nn, discrete=T)
+  else
+    stats <- list(Cllr=Cllr(x), Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index),
+                  mt=mean(x$score[x$target]), mn=mean(x$score[!x$target]), nt=nt, nn=nn, n=nt+nn,
+                  discrete=discrete)
   attr(roc, "call") <- call
   attr(roc, "stats") <- stats
   class(roc) <- c("roc", class(roc))

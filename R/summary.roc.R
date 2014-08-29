@@ -1,3 +1,3 @@
-summary.roc <- function(x, ...) {
-  print(data.frame(attr(x, "stats")), ...)
+summary.roc <- function(x) {
+  data.frame(attr(x, "stats"))
 }
