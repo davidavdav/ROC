@@ -8,22 +8,15 @@ det.plot <- function(x, nr=1, lty=1, col=nr, optimize=T,
          rocch=F, Ninterp=10,
          ...) {
   if (is.null(x)) {
-    xdata <- ydata <- numeric(0)
-    ptype <- "b"
+      xdata <- ydata <- numeric(0)
+      ptype <- "b"
   }
   else {
-    if ("cst" %in% class(x)) {
-      x <- roc(x)
-    } else if (! "roc" %in% class(x)) {
-      if ("data.frame" %in% class(x) && all(is.numeric(x$score), is.logical(x$target)))
-        x <- roc(as.cst(x))
-      else
-        stop("First argument must be of class cst, roc or a data.frame with numeric $score and logical $target")
-    }
-    ## x should be of class "roc" now
-    xdata <- qnorm(x$pfa)
-    ydata <- qnorm(x$pmiss)
-    ptype <- ifelse(nrow(x) > 15, "l", "b")
+      x <- as.roc(x)
+      ## x should be of class "roc" now
+      xdata <- qnorm(x$pfa)
+      ydata <- qnorm(x$pmiss)
+      ptype <- ifelse(nrow(x) > 15, "l", "b")
   }
   xlim <- c(nd(xmin), nd(xmax))         # 0.5 % seems accurately enough
   ylim <- c(nd(ymin), nd(ymax))

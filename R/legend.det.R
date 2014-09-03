@@ -6,11 +6,13 @@ function(legend, where="ur", order=1:length(legend), col,
     y <- nd(50)
     xj <- 1
     yj <- 1
-  } else {
+  } else if (where == "ll") {
     x <- nd(0.1)
     y <- nd(0.1)
     xj <- 0
     yj <- 0
+  } else {
+      return(NULL)
   }
   n <- length(legend)
   if (missing(col)) 
