@@ -1,11 +1,11 @@
 ## Same as plot.det, but new implementation, hopefully with less potential problems.
 ## This function takes objecs of class data.frame, cst, and roc. 
 
-det.plot <- function(x, nr=1, lty=1, col=nr, optimize=T,
+det.plot <- function(x, nr=1, lty=1, col=nr, 
          xmin=0.1, xmax=50, ymin=0.1, ymax=50,
          xlab="false alarm probability (%)",
          ylab="miss probability (%)",
-         rocch=F, Ninterp=10,
+         chull=F, Ninterp=10,
          ...) {
   if (is.null(x)) {
       xdata <- ydata <- numeric(0)

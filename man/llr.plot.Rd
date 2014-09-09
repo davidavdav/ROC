@@ -2,7 +2,7 @@
 \alias{llr.plot}
 \title{Score-to-Log-Likelihood-Ratio plot}
 \description{
-  This function shows the optimal score-to-likelihood ratio function as is determined by computing 
+  This function shows the optimal score-to-log-likelihood-ratio function as is determined by computing 
   the ROC convex hull.
 }
 \usage{

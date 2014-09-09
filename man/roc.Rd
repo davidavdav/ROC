@@ -18,12 +18,13 @@
   subsequent analysis and plotting. 
 }
 \usage{
-roc(x)
+roc(x, laplace=TRUE)
 as.roc(y)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{A data frame, optionally of class \code{cst}}
+  \item{laplace}{A logical: should Laplace's rule of succesion be applied?  This option effectively adds scores of plus and minus infinity to both target and non-target scores, smoothing the false alarm and miss probabilities to account for unseen observations.}
   \item{y}{An object of class \code{roc}, or a data frame that can be coerced to that by using \code{roc(y)}}
 }
 \details{
@@ -38,15 +39,15 @@ as.roc(y)
 }
 \value{
   The function returns a data frame containing the important ROC statistics
-  \item{pfa}{The probability of false alarm (fraction of nontarget trials with a score below the threshold)}
+  \item{pfa}{The probability of false alarm (fraction of non-target trials with a score below the threshold)}
   \item{pmiss}{The probability of a miss (fraction of target trials with a score above the threshold)}
   \item{thres}{The threshold at which \code{pfa} and \code{pmiss} are determined}
   \item{chull}{A logical indicating whether this point is on the Convex Hull of the ROC or not}
   \item{opt.llr}{The optimum log-lilelihood-ratio corresponding to scores between this threshold and the next.  It is equal to the log of the negative slope of line segments on the convex hull.}
   
-  The data frame further has two additional attributes, \code{data}, the original data, and \code{stats}, that contain some basic summary statistics of the ROC analysis.  
-  \item{Cllr}{Cost of LLR}
-  \item{Cllr.min}{Minimum Cllr, computed using isotonic regression}
+  The data frame further has two additional attributes, \code{data}, the original data augmented with a column \code{opt.llr}, and \code{stats}, which contains some basic summary statistics of the ROC analysis.  
+  \item{Cllr}{Cost of LLR (see [2,3])}
+  \item{Cllr.min}{Minimum Cllr, computed using isotonic regression (see [2])}
   \item{EER}{The equal Error Rate, computed using the Convex Hull method}
   \item{mt}{The mean value of target scores}
   \item{mn}{The mean value of non-target scores}
