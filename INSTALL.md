@@ -10,7 +10,7 @@ Operating systems that I like
 
 This would include most Linux and Unix-like systems
 
- - Download the package from github as a single .tar.gz
+ - Download the package from github as a single [.tar.gz https://api.github.com/repos/davidavdav/ROC/tarball]
  - in a command line, type
  
  ```sh
