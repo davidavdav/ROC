@@ -31,7 +31,7 @@
     ## Doddington's rule of 30
     dr30i <- c(max(which(fa>=30)), min(which(miss>=30)))
     plo30 <- -r$opt.llr[dr30i]
-    cat("i ", dr30i, " plo ", plo30, "\n")
+#    cat("i ", dr30i, " plo ", plo30, "\n")
     norm.e <- pmin(sigmoid(plo30), sigmoid(-plo30))
     points(plo30, bayes.error.rate(x$opt.llr[x$target],
                                    x$opt.llr[!x$target], plo30) / norm.e, pch="*", cex=3)

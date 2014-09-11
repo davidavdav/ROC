@@ -1,11 +1,9 @@
 `ape.plot` <-
 function(data, legend="APE plot", bar=T, bw=F) {
-  if ("list" %in% class(data)) stopifnot(all(sapply(data, class)=="det"))
-  else {
-    if ("sre" %in% class(data)) data <- det(data) # "sre" is OK
-    stopifnot("det" %in% class(data))       # otherwise must be class "det"
-    data <- list(data)
-  }
+  if ("list" %in% class(data))
+      data <- lapply(data, as.roc)
+  else 
+    data <- list(as.roc(data))
   def.par <- par(no.readonly=T)          # save parameters...
   nr <- 1+as.numeric(bar)
   nsys <- length(data)
@@ -16,8 +14,8 @@ function(data, legend="APE plot", bar=T, bw=F) {
   lpo <- seq(-7, 7, by=0.1)
   pe <- pe.min <- pe.ref <- matrix(nrow=length(lpo), ncol=nsys)
   for (i in 1:nsys) {
-    x <- data[[i]]$data
-    x <- opt.llr(x, laplace=F) ## add optimal llr columns
+    x <- attr(data[[i]], "data")
+##    x <- opt.llr(x, laplace=F) ## add optimal llr columns
     clog[i] <- Cllr(x)
     clog.min[i] <- Cllr(x, opt=T)
     pe[,i] <- bayes.error.rate(x$score[x$target], x$score[!x$target], lpo)

@@ -1,6 +1,7 @@
 \name{roc}
 \alias{roc}
 \alias{as.roc}
+\alias{ROC}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Compute Receiver Operating Characteristic statistics from a dataframe or CST object}
 \description{
@@ -82,7 +83,7 @@ as.roc(y)
 ## RU submission to EVALITA speaker recognition applications track
 data(ru.2009)
 ## inspect details of data frame
-head(ru.2006)
+head(ru.2009)
 ## look at TC6 train condition and TS2 test condition (easiest task:-)
 x <- subset(ru.2009, mcond=="TC6" & tcond=="TS2")
 ## compute det statistics

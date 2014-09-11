@@ -23,11 +23,18 @@
 }
 \author{David A. van Leeuwen}
 \examples{
+## These data were already calibrated
 data(tno.2008)
+summary(roc(tno.2008))
+## now re-calibrate with a fairly complicated model
 train <- subset(tno.2008, as.character(model)<65357)
 tst <- subset(tno.2008, as.character(model)>=65357)
 cal <- train.logreg(train, "score + mmic + tmic")
 cal 
 x <- transform(tst, score=predict(cal, tst))
 det.plot(x)
+## re-calibrate with a simple equal-variance Gaussian model
+cal <- train.cmlg(train)
+x <- transform(tst, score=predict(cal, tst))
+summary(roc(x))
 }

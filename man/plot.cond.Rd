@@ -40,11 +40,11 @@ plot.cond(x, cond, nr = 1, equalize = T, ...)
 \author{ David van Leeuwen }
 \seealso{ \code{cond.table}, \code{plot.det} }
 \examples{
-## load data
+## load data from the TNO submission to the NIST Speaker Recognition Evaluation 2008
 data(tno.2008)
-## plot for all sensible conditions
+## plot for all sensible conditions of NIST SRE 2008
 plot.cond(tno.2008, list(mtype, ttype, tmic))
-## another eval
+## another eval, EVALITA, the Radboud University Nijmegen submission
 data(ru.2009)
 setDCF("evalita")
 ## we can plot fol all train/test conditions in one go...
@@ -53,6 +53,10 @@ plot.cond(ru.2009, list(mcond, tcond))
 x <- subset(ru.2009, mcond=="TC6" & tcond=="TS2")
 plot.cond(x, gender)
 plot.cond(x, channel)
+## Finally, some human speaker recognition data, with ordered factor levels, collected by Milou van Dijk
+data(milou)
+head(milou)
+plot.cond(milou, cl, equalize=F, where="ll", main="Naive human speaker recognition by difficulty class")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

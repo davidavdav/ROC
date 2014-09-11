@@ -29,7 +29,7 @@ legend.det(legend, where = "ur", order = 1:length(legend), col, lty)
 \seealso{ \code{plot.det()} }
 \examples{
 ## make an empty DET frame
-plot.det(NULL)
+det.plot(NULL)
 ## Add a legend
 legend.det(c("one system", "another system"), order=c(2,1), lty=1:2)
 }

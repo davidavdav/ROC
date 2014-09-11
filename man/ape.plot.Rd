@@ -61,9 +61,9 @@ x <- subset(tno.2008, mtype=="phonecall" & ttype=="phonecall" &
 ## select low-error-favourite NIST condition 7
 y <- subset(x, mlang=="eng" & tlang=="eng")
 ## compare the two
-ape.plot(list(det(x), det(y)), legend=c("all phn", "english only"))
+ape.plot(list(roc(x), roc(y)), legend=c("all phn", "english only"))
 ## look at the NBE plot for the English trials
-nbe.plot(det(y))
+nbe.plot(roc(y))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

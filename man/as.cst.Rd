@@ -30,8 +30,8 @@ cst.tnt(tar, non)
 df <- data.frame(target=rep(c(F,T),each=100), score=rnorm(200, mean=rep(c(0,1), each=100)))
 x <- as.cst(df)
 roc(x)
-## read in data from files
-y <- read.tnt("targets.txt", "nontargets.txt")
 ## read in data from vectors
-z <- cst.tnt(rnorm(100, 1), rnorm(1000, 0))
+y <- cst.tnt(rnorm(100, 1), rnorm(1000, 0))
+## read in data from files
+z <- cst.tnt("targets.txt", "nontargets.txt")
 }
