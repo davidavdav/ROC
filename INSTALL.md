@@ -39,4 +39,4 @@ Start R, and type
 library(ROC)
 example(plot.cond)
 ```
-and hit a couple of times <return>.  You should see a couple of DET plots being drawn. 
+and hit a couple of times `<return>`.  You should see a couple of DET plots being drawn. 
