@@ -3,15 +3,15 @@ INSTALL
 
 As long as this package is not in CRAN, installation may ba a hassle.  Installation will depend on the operating system.  
 
-It is probaly easiest if you have a version  2.15 of R installed or a more recent version. 
+It is probaly easiest if you have R version 2.15 or a more recent version installed. 
 
 Operating systems that I like
 -----------------------------
 
 This would include most Linux and Unix-like systems
 
- - Download the package from github as a single [ROC.tar.gz](https://api.github.com/repos/davidavdav/ROC/tarball)
- - in a command line, type
+  - Download the package from github as a single [ROC.tar.gz](https://api.github.com/repos/davidavdav/ROC/tarball)
+  - in a command line, type
  
  ```sh
  R --vanilla CMD INSTALL ROC.tar.gz
