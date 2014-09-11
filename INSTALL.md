@@ -10,7 +10,7 @@ Operating systems that I like
 
 This would include most Linux and Unix-like systems
 
- - Download the package from github as a single [.tar.gz https://api.github.com/repos/davidavdav/ROC/tarball]
+ - Download the package from github as a single [ROC.tar.gz](https://api.github.com/repos/davidavdav/ROC/tarball)
  - in a command line, type
  
  ```sh
@@ -22,13 +22,13 @@ Operating systems that I really do not like
  
 This would be all sorts of versions of Windows
  
-  - Download the package from github as a single .tar.gz
+  - Download the package from github as a single [ROC.zip](https://api.github.com/repos/davidavdav/ROC/zipball)
   - open a `cmd` window
   - cd to the installation director of R, specifically to the place where R.exe is located
   - type
 
 ```dos
-R --vanilla CMD INSTALL \\path\to\ROC.tar.gz
+R --vanilla CMD INSTALL \\path\to\ROC.zip
 ```
 
 Testing installation
@@ -39,4 +39,4 @@ Start R, and type
 library(ROC)
 example(plot.cond)
 ```
-and hit a couple of times `<return>`.  You should see a couple of DET plots being drawn. 
+and hit a couple of times `<return>`.  You should see a number of DET plots that correspond to some of the example data sets. 
