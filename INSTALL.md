@@ -17,16 +17,26 @@ This would include most Linux and Unix-like systems
  R --vanilla CMD INSTALL ROC.tar.gz
  ```
  
- Operating systems that I really do not like
- -------------------------------------------
+Operating systems that I really do not like
+-------------------------------------------
  
- This would be all sorts of versions of Windows
+This would be all sorts of versions of Windows
  
   - Download the package from github as a single .tar.gz
   - open a `cmd` window
   - cd to the installation director of R, specifically to the place where R.exe is located
   - type
-  ```sh
-  R --vanilla CMD INSTALL \\path\to\ROC.tar.gz
-  ```
-  
+
+```dos
+R --vanilla CMD INSTALL \\path\to\ROC.tar.gz
+```
+
+Testing installation
+--------------------
+
+Start R, and type
+```R
+library(ROC)
+example(plot.cond)
+```
+and hit a couple of times <return>.  You should see a couple of DET plots being drawn. 
