@@ -1,25 +1,41 @@
 ## this should cover most cases of input data now
-roc <- function(x, laplace=T) {
+roc <- function(x, cond, laplace=T) {
   x <- as.cst(x)
   call <- match.call()
+  ordered <- is.ordered(x$score)        #ordered factor
+  if (!missing(cond)) {
+      ct <- eval(substitute(cond.table(x, cond, target=TRUE)), x, parent.frame())
+      nvar <- ncol(ct)-1
+      mf <- tapply(ct$Freq, ct$target, mean)
+      ct$weight <- as.vector(mf[ct$target]/ct$Freq)
+      x <- merge(x, ct, by=names(ct)[1:nvar])
+  } else {
+      x$weight <- 1
+  }
   o <- order(x$score, !x$target)        # order targets before nontargets
   xo <- x[o,]
-  ordered <- is.ordered(x$score)        #ordered factor
   score <- xo$score
+  w <- xo$weight
   discrete <- length(unique(score)) < 0.5 * length(score)
-  w <- 1                                # weight, for future change
   t <- as.numeric(xo$target)             # targets, delta pmiss
-  if (laplace) {
-    t <- c(1, 0, t, 1, 0)
-    score <- c(-Inf, -Inf, score, Inf, Inf)
-#    w <- c(1, 1, w, 1, 1)
+  if (laplace & !ordered) {
+      t <- c(1, 0, t, 1, 0)
+      if (ordered) {                    # this shouldn't happen
+          ls <- length(score)
+          score <- score[c(1,1,1:ls,1,1)]
+          score[1:2] <- min(score)
+          score[ls+(1:2)] <- max(score)
+      } else {
+          score <- c(-Inf, -Inf, score, Inf, Inf)
+      }
+      w <- c(1, 1, w, 1, 1)
   }
   n <- 1-t                              # nontargtes, delta pfa
   nt <- sum(t*w)                        # number of target trials
   nn <- sum((1-t)*w)                    # number of non-target trials
   ## in the following, we group targets and non-targets with identical score
   ## we need to step carfully through them, as their cumulative counts need
-  ## to be used to comput delta PFA and delta pmiss. 
+  ## to be used to compute delta PFA and delta pmiss. 
   dt <- c(1,diff(as.numeric(score))!=0,1)         # points where threshold changes
   changes <- which(dt!=0)
   if (ordered) {                        # can't append to a factor
@@ -42,6 +58,7 @@ roc <- function(x, laplace=T) {
     t <- t[-remove]
     n <- n[-remove]
     thres <- thres[-remove]
+    w <- w[-remove]
   }
   pmiss <- c(0,rangecheck(cumsum(t*w)/nt)) # the cummlative (weighted) probs
   pfa <- c(1,rangecheck(1 - cumsum(n*w)/nn))

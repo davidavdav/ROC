@@ -4,8 +4,8 @@
 \title{ Plot several DET plots from a single trial list, analyzed per condition }
 \description{
   This function plots DET curves for all conditions in a multi-condition
-  trial set, such as NIST SRE-2008.  An overall DET curve, equalizing
-  trial counts, is also plotted. 
+  trial set, such as NIST SRE-2008.  An overall DET curve, 
+  equalizing trial counts, is also plotted. 
 }
 \usage{
 plot.cond(x, cond, nr = 1, equalize = T, ...)
@@ -15,12 +15,12 @@ plot.cond(x, cond, nr = 1, equalize = T, ...)
   \item{x}{ A data.frame of class \code{sre}/ }
   \item{cond}{ A list of factors specifying the conditions }
   \item{nr}{ The number (color) of the first line. }
-  \item{equalize}{ Do we equalize the overall DET curve? }
-  \item{\dots}{ further parameters for \code{plot.det()} }
+  \item{equalize}{ Do we equalize trial counts for the overall DET curve? }
+  \item{\dots}{ further parameters for \code{det.plot()} }
 }
 \details{
   For each condition determined by the list of factors, a separate DET
-  will be plotted in a new color.  The overall condition is plotterd in
+  will be plotted in a new color.  The overall condition is plotted in
   black, as a last curve so that it will be ``on top of'' the other
   curves.  You may find yourself soon to be
   running out of sensible colors.

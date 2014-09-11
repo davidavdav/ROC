@@ -19,7 +19,7 @@ plot.roc <- function(r, nr=1, chull=T, type=ifelse(nrow(r) > 15, "l", "b"), trad
     par(pty="s")
     plot(r$pfa, y, xlim=xlim, ylim=ylim, type=type, xlab=xlabel, ylab=ylabel, lwd=lwd, ...)
   } else {
-    lines(r$pfa, y, type=type, col=n, ...)
+    lines(r$pfa, y, type=type, col=nr, ...)
   }
   summary(r)
 }

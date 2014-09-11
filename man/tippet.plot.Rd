@@ -2,12 +2,14 @@
 \alias{tippet.plot}
 \title{Draw a Tippet plot for a forensic comparison system}
 \description{
-  This function draws a Tippet plot for a forensic comparison system, given data in a \code{cst} type data frame.  Tippet plots are used in the forensic science literature, although the current author does not believe they are very insightful}
+  This function draws a Tippet plot for a forensic comparison system, given data in a \code{cst} type data frame.  Tippet plots are used in the forensic science literature, although the present author does not believe they are very insightful.}
 \usage{
 tippet.plot(x, ...)
 }
 \arguments{
- \item{x}{An object of class \code{roc}, or a data frame that can be coerced to that by using \code{roc(x}}}
+ \item{x}{An object of class \code{roc}, or a data frame that can be coerced to that by using \code{roc(x}}
+ \item{...}{Further arguments to \code{plot} and \code{lines}}
+}
 \details{
  A tippet plot shows both the true positive and the true negative rate as a function of score threshold.  The x-axis is shown on a logarithmic scale, with the title "LR bigger than" indicating the cumulative nature of the y-axis.  
 
@@ -15,7 +17,7 @@ tippet.plot(x, ...)
 }
 \author{ David A. van Leeuwen}
 \examples{
-## Radboud University submission to EVALITA speaker recognition applications track
-data(ru.2009)
-tippet.plot(ru.2009)
+## data from TNO's submission to NIST Speaker Recogntion Evaluation 2008
+data(tno.2008)
+tippet.plot(tno.2008)
 }

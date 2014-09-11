@@ -3,7 +3,7 @@
 \alias{plot.ddensity}
 \title{Double probability density computation and plotting}
 \description{
- \code{ddensity} computes the density of the scores in a \code{cst} data frame simultaneously for target and non-target scores.  The main purpose is plotting of the densities of the scores.
+ \code{ddensity} computes the density of the scores in a \code{cst} data frame simultaneously for target and non-target scores.  The main purpose is for plotting the densities of the scores.
 }
 \usage{
  ddensity(x, ...)

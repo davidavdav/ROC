@@ -6,16 +6,16 @@
   For averaging detection trial lists that were obtained from different
   experimental conditions, the amounts of trials in these conditions
   should be weighted.  This function computes a contingency table from
-  an \code{sre} object.
+  an \code{cst} object.
 }
 \usage{
 cond.table(x, cond, target = F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{ An object of class \code{sre}}
+  \item{x}{ An object of class \code{cst}, or compatible data frame or \code{roc} object}
   \item{cond}{ A list of factors making up the various conditions }
-  \item{target}{ Is column \code{target} to be seen as a factor? }
+  \item{target}{ Is column \code{target} to be interpreted as a factor? }
 }
 \details{
   This function produces a table of the number of trials for each
@@ -40,7 +40,7 @@ cond.table(x, cond, target = F)
   multi-condition Speaker Recognition Evaluations,'' Proc. Interspeech,
   Brighton, September 2009, pp 908--911.}
 \author{ David van Leeuwen }
-\seealso{ \code{det.sre()}, \code{plot.cond}}
+\seealso{ \code{\code{plot.cond}}}
 \examples{
 ## a NIST 2008 SRE data set
 data(tno.2008)

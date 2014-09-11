@@ -1,5 +1,5 @@
 `plot.cond` <-
-function(x, cond, nr=1, equalize=FALSE, where="ur", ...) {
+function(x, cond, nr=1, equalize=TRUE, where="ur", ...) {
   ## make an empty canvas
   r <- det.plot(NULL, ...)
   if (!missing(cond)) {
@@ -17,9 +17,9 @@ function(x, cond, nr=1, equalize=FALSE, where="ur", ...) {
     }
     ## plot overall DET last, in order to paint it "on top"
     nr <- nr+1
-#    if (equalize)
-#      p <- eval(substitute(det.plot(det(x, cond), nr, col=1, ...)),x, parent.frame())
-#    else
+    if (equalize)
+      p <- eval(substitute(det.plot(roc(x, cond), nr, col=1, ...)),x, parent.frame())
+    else
       p <- det.plot(x, nr, col=1, ...)
   } else
       p <- det.plot(x, 2, col=1, ...)
