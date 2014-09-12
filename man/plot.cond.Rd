@@ -12,7 +12,7 @@ plot.cond(x, cond, nr = 1, equalize = T, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{ A data.frame of class \code{sre}/ }
+  \item{x}{ A data.frame of class \code{sre}}
   \item{cond}{ A list of factors specifying the conditions }
   \item{nr}{ The number (color) of the first line. }
   \item{equalize}{ Do we equalize trial counts for the overall DET curve? }
@@ -33,14 +33,18 @@ plot.cond(x, cond, nr = 1, equalize = T, ...)
   each condition, and averaged over all conditions (but equalized for trial
   counts). 
 }
-\references{ David A. van Leeuwen, ``Overal performance metrics for
+\references{\enumerate{
+    \item David A. van Leeuwen, ``Overal performance metrics for
     multi-condition Speaker Recognition Evaluations,''
     Proc. Interspeech,
-    Brighton, September 2009, pp 908--911.}
+    Brighton, September 2009, pp 908--911.
+    \item Milou van Dijk, Rosemary Orr, David van der Vloed and David van Leeuwen,
+    ``A human benchmark for automatic speaker recognition'', Proc.\ of the 1st International Conference Biometric Technologies in Forensic Science, Nijmegen 2013.}
+}
 \author{ David van Leeuwen }
 \seealso{ \code{cond.table}, \code{plot.det} }
 \examples{
-## load data from the TNO submission to the NIST Speaker Recognition Evaluation 2008
+## load data from the TNO submission to the NIST Speaker Recognition Evaluation 2008, see [1]
 data(tno.2008)
 ## plot for all sensible conditions of NIST SRE 2008
 plot.cond(tno.2008, list(mtype, ttype, tmic))
@@ -53,7 +57,7 @@ plot.cond(ru.2009, list(mcond, tcond))
 x <- subset(ru.2009, mcond=="TC6" & tcond=="TS2")
 plot.cond(x, gender)
 plot.cond(x, channel)
-## Finally, some human speaker recognition data, with ordered factor levels, collected by Milou van Dijk
+## Finally, some human speaker recognition data, with ordered factor levels, collected by Milou [2]
 data(milou)
 head(milou)
 plot.cond(milou, cl, equalize=F, where="ll", main="Naive human speaker recognition by difficulty class")

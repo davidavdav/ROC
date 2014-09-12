@@ -87,12 +87,13 @@ roc <- function(x, cond, laplace=T) {
   roc$opt.llr <- with(subset(roc, chull), log(abs(diff(pmiss) / diff(pfa))))[cumsum(roc$chull)]
   ## then, through isotonic regression---this should give identical answers
   x.opt <- attr(roc, "data") <- opt.llr(x, laplace)
+  pauc <- pAUC(pfa[index], pmiss[index])
   ##eer
   if (ordered)
-    stats <- list(Cllr=NA, Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index),
+    stats <- list(Cllr=NA, Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index), pAUC=pauc, 
                   mt=NA, mn=NA, nt=nt, nn=nn, n=nt+nn, discrete=T)
   else
-    stats <- list(Cllr=Cllr(x), Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index),
+    stats <- list(Cllr=Cllr(x), Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index), pAUC=pauc,
                   mt=mean(x$score[x$target]), mn=mean(x$score[!x$target]), nt=nt, nn=nn, n=nt+nn,
                   discrete=discrete)
   attr(roc, "call") <- call

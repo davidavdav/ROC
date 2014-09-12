@@ -1,7 +1,7 @@
-print.roc <- function(x, ...) {
+print.roc <- function(x, full=FALSE, ...) {
   cat("Receiver Operating Characteristic, call = ", paste(deparse(attr(x, "call")), sep="\n", collapse="\n"), "\n")
   cat("ROC table:\n")
-  if (nrow(x)<100)
+  if (nrow(x)<100 || full)
     print.data.frame(x, ...)
   else {
     cat(sprintf("  %d entries, head():\n", nrow(x)))
