@@ -43,7 +43,7 @@ roc <- function(x, cond, laplace=T) {
     thres[length(score)+1] <- NA
   } 
   else 
-    thres <- c(score,NA)
+      thres <- c(score,NA)
   remove <- numeric(0)
   for (i in 1:(length(changes)-1)) {
     start <- changes[i]
@@ -52,14 +52,14 @@ roc <- function(x, cond, laplace=T) {
       t[start] <- sum(t[start:end])
       n[start] <- sum(n[start:end])
       remove <- c(remove, (start+1):end)           # mark range for removal
-    }
   }
-  if (length(remove)>1) {               # why 1 and not 0?
+}
+  if (length(remove)>0) {               # why 1 and not 0?  Seemed to be a major bug!
     t <- t[-remove]
     n <- n[-remove]
     thres <- thres[-remove]
     w <- w[-remove]
-  }
+}
   pmiss <- c(0,rangecheck(cumsum(t*w)/nt)) # the cummlative (weighted) probs
   pfa <- c(1,rangecheck(1 - cumsum(n*w)/nn))
   ## next we want to optimize the entries in the (PFA, pmiss, thres) table.
