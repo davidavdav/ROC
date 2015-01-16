@@ -14,6 +14,7 @@ This would include most Linux and Unix-like systems
   - in a command line, type
  
  ```sh
+ mv master ROC.tar.gz ## where `master' is the name of the download
  R --vanilla CMD INSTALL ROC.tar.gz
  ```
  
