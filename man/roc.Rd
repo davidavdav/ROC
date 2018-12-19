@@ -77,7 +77,7 @@ as.roc(y)
 %%
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 %%}
-\seealso{\code{read.cst}, \code{read.tnt}, \link{\code{plor.roc}},\link{\code{det.plot}}}
+\seealso{\code{read.cst}, \code{read.tnt}, \code{plor.roc}, \code{det.plot}}
 \examples{
 ## Load example SRE data: 
 ## RU submission to EVALITA speaker recognition applications track
