@@ -10,7 +10,7 @@ function(x, laplace=T) {
     p.ideal <- c(1,0,p.ideal,1,0) ## lapace's rule of succession
     w.ideal <- c(1,1,w.ideal,1,1)
   }
-  p.opt <- monoreg(p.ideal,w=w.ideal)$yf
+  p.opt <- fdrtool::monoreg(p.ideal,w=w.ideal)$yf
   if (laplace) 
     p.opt <- p.opt[3:(length(p.opt)-2)]
   post.log.odds <- log(p.opt)-log(1-p.opt)

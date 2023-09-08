@@ -28,5 +28,5 @@ Description: This package contains a set of routines that can compute various
  -- tippet plot
  -- normalized Bayes error rate plot
 License: GPL-2
-Depends: fdrtool (>= 1.2.4)
+Imports: fdrtool (>= 1.2.4)
 LazyLoad: yes
